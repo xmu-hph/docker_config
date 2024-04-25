@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -Ceu
 imgroot="ph210950/traffic_signal_control:"
 imgtag="traffic_torch201_cuda118_cudnn8_ubuntu2204"
 imgname=$imgroot$imgtag
