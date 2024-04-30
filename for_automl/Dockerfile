@@ -27,4 +27,6 @@ WORKDIR /root
 ENV SHELL /bin/bash
 # 设置容器默认启动命令为 bash
 RUN pip install flask loguru numpy pandas
+RUN jupyter lab --generate-config
+RUN echo "c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}" >> ~/.jupyter/jupyter_lab_config.py
 CMD ["/bin/bash"]
