@@ -1,5 +1,5 @@
-FROM nvcr.io/nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
-#cuda:11.8.0-runtime-ubuntu22.04
+FROM nvcr.io/nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+#cuda:11.8.0-cudnn8-devel-ubuntu22.04
 RUN echo "deb https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse" > /etc/apt/sources.list
 RUN echo "deb-src https://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse" >> /etc/apt/sources.list
 RUN echo "deb https://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse" >> /etc/apt/sources.list
@@ -34,6 +34,11 @@ RUN pip install traci pandas tqdm gym loguru pfrl
 WORKDIR /root
 RUN git clone git@github.com:cityflow-project/CityFlow.git
 RUN cd CityFlow && pip install .
-RUN pip install argparse optuna gym[box2d] mujoco mediapy
+RUN pip install argparse optuna gym[box2d] mujoco mediapy libsumo PyYAML lmdb
+RUN pip install torch_scatter
+ENV SUMO_HOME="/usr/local/lib/python3.10/dist-packages/sumo"
+ENV PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
+RUN pip install torch_geometric
+RUN pip install torch-sparse torch-cluster torch-spline-conv
 #RUN git clone git@github.com:google-deepmind/mujoco_menagerie.git /home
 CMD ["/bin/bash"]
